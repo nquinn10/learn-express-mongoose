@@ -6,12 +6,13 @@ function get_book(id) {
     if (typeof id !== "string") {
         return ({status: "error"});
     }
+    // $eq converts to string
     return Book.findOne({'_id': {$eq: id}}).populate('author');
 }
 
 function get_book_dtl(id) {
   return BookInstance
-          .find({ 'book': id })
+          .find({ 'book': id }) // security risk bc directly using id without converting first ?
           .select('imprint status');
 }
 
